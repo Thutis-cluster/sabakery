@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ouma's Oven Bakery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;600;700&family=Mulish:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cocoa:#3E2723;
+    --cream:#FAF3E6;
+    --ochre:#D98E2B;
+    --sage:#6B7C59;
+    --line: rgba(62,39,35,0.14);
+    --serif: 'Frank Ruhl Libre', Georgia, serif;
+    --sans: 'Mulish', -apple-system, sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{ font-family: var(--sans); color: var(--cocoa); background: var(--cream); line-height:1.65; }
+  a{ color:inherit; }
+  .wrap{ max-width: 1120px; margin:0 auto; padding: 0 24px; }
+
+  /* ---------- Top bar ---------- */
+  .topbar{ background: var(--cocoa); color: rgba(250,243,230,0.85); font-size:0.85rem; }
+  .topbar .wrap{ display:flex; justify-content:space-between; padding: 8px 24px; flex-wrap:wrap; gap:8px; }
+  .topbar b{ color: var(--ochre); }
+
+  /* ---------- Nav ---------- */
+  .nav{ background: var(--cream); border-bottom: 2px solid var(--cocoa); position:sticky; top:0; z-index:20; }
+  .nav .wrap{ display:flex; align-items:center; justify-content:space-between; height:82px; gap:20px; }
+  .brand{ display:flex; align-items:center; gap:10px; font-family: var(--serif); font-weight:700; font-size:1.4rem; }
+  .brand svg{ width:32px; height:32px; }
+  .nav-links{ display:flex; gap:26px; list-style:none; }
+  .nav-links a{ text-decoration:none; font-weight:600; font-size:0.9rem; }
+  .nav-links a:hover{ color: var(--ochre); }
+  .nav-actions{ display:flex; gap:10px; }
+  .icon-btn{ display:flex; align-items:center; gap:8px; padding:10px 18px; border-radius:22px; text-decoration:none; font-weight:700; font-size:0.88rem; white-space:nowrap; }
+  .icon-btn svg{ width:16px; height:16px; flex-shrink:0; }
+  .icon-btn.call{ background: var(--ochre); color:#fff; }
+  .icon-btn.directions{ border:2px solid var(--cocoa); }
+  @media (max-width:900px){ .nav-links{ display:none; } }
+  @media (max-width:760px){ .nav-actions{ display:none; } }
+
+  /* ---------- Sticky mobile bar ---------- */
+  .sticky-actions{ display:none; }
+  @media (max-width:760px){
+    .sticky-actions{ display:flex; position:fixed; bottom:0; left:0; right:0; z-index:30; gap:8px;
+      padding: 10px 10px calc(10px + env(safe-area-inset-bottom,0px)); background: var(--cocoa); box-shadow: 0 -2px 10px rgba(0,0,0,0.2); }
+    .sticky-actions a{ flex:1; display:flex; align-items:center; justify-content:center; gap:6px; padding:14px 6px; border-radius:20px; text-decoration:none; font-weight:700; font-size:0.9rem; }
+    .sticky-actions svg{ width:17px; height:17px; flex-shrink:0; }
+    .sticky-actions .call{ background: var(--ochre); color:#fff; }
+    .sticky-actions .whatsapp{ background:#1E9E5A; color:#fff; }
+    .sticky-actions .directions{ background: var(--cream); color: var(--cocoa); }
+    body{ padding-bottom: 76px; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{ padding: 76px 0 70px; }
+  .hero .wrap{ display:grid; grid-template-columns: 1.05fr 0.95fr; gap:56px; align-items:center; }
+  .hero .kicker{ font-family: var(--serif); font-style:italic; font-size:1.1rem; color: var(--ochre); margin-bottom:14px; }
+  .hero h1{ font-family: var(--serif); font-weight:700; font-size: clamp(2.3rem,4.6vw,3.6rem); line-height:1.18; max-width:13ch; }
+  .hero p{ margin-top:20px; font-size:1.06rem; color: rgba(62,39,35,0.75); max-width:44ch; }
+  .hero-ctas{ margin-top:28px; display:flex; gap:14px; flex-wrap:wrap; }
+  .btn-primary{ background: var(--cocoa); color: var(--cream); padding:15px 30px; border-radius:24px; text-decoration:none; font-weight:700; font-size:0.94rem; }
+  .btn-secondary{ padding:15px 30px; border-radius:24px; text-decoration:none; font-weight:700; font-size:0.94rem; border:2px solid var(--cocoa); }
+  .hero-art{ background:#fff; border-radius:18px; aspect-ratio:4/5; display:flex; align-items:center; justify-content:center; box-shadow: 0 24px 48px rgba(62,39,35,0.08); }
+  .hero-art svg{ width:64%; height:64%; }
+  @media (max-width:860px){ .hero .wrap{ grid-template-columns:1fr; } .hero-art{ order:-1; max-width:260px; margin:0 auto; } }
+
+  .trust{ background: var(--ochre); }
+  .trust .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px 32px; padding: 18px 24px; }
+  .trust div{ font-family: var(--serif); font-weight:600; font-size:0.95rem; color: var(--cocoa); }
+
+  /* ---------- Section shell ---------- */
+  section{ padding: 86px 0; }
+  .section-head{ margin-bottom: 42px; max-width:58ch; }
+  .section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
+  .kicker{ font-family: var(--serif); font-style:italic; font-size:1rem; color: var(--ochre); margin-bottom:8px; }
+  h2{ font-family: var(--serif); font-weight:700; font-size: clamp(1.8rem,3.2vw,2.5rem); }
+  .section-head p{ margin-top:12px; color: rgba(62,39,35,0.62); }
+
+  /* ---------- Categories ---------- */
+  .categories{ display:grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
+  .category{ background:#fff; border-radius:14px; padding: 28px 22px; text-align:center; border:1px solid var(--line); }
+  .category svg{ width:38px; height:38px; margin:0 auto 14px; }
+  .category h3{ font-family: var(--serif); font-weight:700; font-size:1.1rem; }
+  .category p{ font-size:0.88rem; color: rgba(62,39,35,0.6); margin-top:8px; }
+  @media (max-width:900px){ .categories{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:520px){ .categories{ grid-template-columns:1fr; } }
+
+  /* ---------- Menu / pricing ---------- */
+  .menu{ background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .service-groups{ display:grid; grid-template-columns: 1fr 1fr; gap: 0 64px; }
+  .service-group{ border-top: 3px solid var(--sage); padding: 20px 0 28px; }
+  .service-group h3{ font-family: var(--serif); font-weight:700; font-size:1.25rem; margin-bottom:6px; }
+  .service-row{ display:grid; grid-template-columns: 1fr auto; gap:16px; align-items:baseline; padding:12px 0; border-bottom:1px dotted var(--line); }
+  .service-row:last-child{ border-bottom:none; }
+  .service-row .name small{ display:block; font-weight:400; font-size:0.8rem; color: rgba(62,39,35,0.55); }
+  .service-row .price{ font-family: var(--serif); font-weight:700; font-size:1.12rem; color: var(--ochre); white-space:nowrap; }
+  .services-note{ font-size:0.86rem; color: rgba(62,39,35,0.55); margin-top:8px; }
+  @media (max-width:820px){ .service-groups{ grid-template-columns:1fr; gap:0; } }
+
+  /* ---------- Info strip ---------- */
+  .info{ background: var(--sage); color:#fff; }
+  .info .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px; padding: 32px 24px; }
+  .info-block b{ display:block; font-family: var(--serif); font-weight:700; font-size:1rem; margin-bottom:4px; }
+  .info-block span{ font-size:0.86rem; color: rgba(255,255,255,0.92); }
+  .info-block a{ color:#fff; text-decoration:underline; }
+
+  /* ---------- Bulk / fundraiser callout ---------- */
+  .bulk{ background: var(--cocoa); color: var(--cream); }
+  .bulk .wrap{ display:grid; grid-template-columns: 1.2fr 0.8fr; gap:48px; align-items:center; }
+  .bulk .kicker{ color: var(--ochre); }
+  .bulk h2{ color: var(--cream); }
+  .bulk p{ margin-top:14px; color: rgba(250,243,230,0.75); max-width:48ch; }
+  .bulk-card{ background: var(--ochre); color: var(--cocoa); padding:30px; border-radius:14px; }
+  .bulk-card b{ display:block; font-family: var(--serif); font-weight:700; font-size:1.15rem; }
+  .bulk-card .num{ display:block; font-family: var(--serif); font-weight:700; font-size:1.7rem; margin:8px 0 16px; text-decoration:none; }
+  .bulk-card a.btn{ display:inline-block; background: var(--cocoa); color: var(--cream); padding:12px 22px; border-radius:22px; text-decoration:none; font-weight:700; }
+  @media (max-width:820px){ .bulk .wrap{ grid-template-columns:1fr; } }
+
+  /* ---------- Order form ---------- */
+  .order .wrap{ display:grid; grid-template-columns: 0.85fr 1.15fr; gap:56px; }
+  .order .section-head{ margin-bottom:0; }
+  form{ display:grid; gap:16px; }
+  .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  label{ display:block; font-size:0.82rem; font-weight:700; margin-bottom:6px; }
+  input, select, textarea{ width:100%; padding:13px 14px; font-family: var(--sans); font-size:0.95rem; border:1px solid var(--line); background: var(--cream); border-radius:10px; }
+  input:focus, select:focus, textarea:focus{ outline:2px solid var(--ochre); outline-offset:1px; }
+  .submit-btn{ justify-self:start; background: var(--ochre); color:#fff; border:none; padding:15px 32px; font-weight:700; font-size:0.95rem; border-radius:24px; cursor:pointer; }
+  .submit-btn:hover{ background:#b97a24; }
+  .form-note{ font-size:0.82rem; color: rgba(62,39,35,0.5); }
+  @media (max-width:860px){ .order .wrap{ grid-template-columns:1fr; } .form-row{ grid-template-columns:1fr; } }
+
+  /* ---------- Footer ---------- */
+  footer{ background: var(--cocoa); color: rgba(250,243,230,0.7); padding: 44px 0; }
+  footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; font-size:0.88rem; }
+  footer .brand{ color: var(--cream); font-family: var(--serif); font-size:1.15rem; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <span>Sawubona · Welkom · Molweni — fresh from the oven every morning</span>
+    <span><b>Fundraiser &amp; bulk orders</b> always welcome</span>
+  </div>
+</div>
+
+<nav class="nav">
+  <div class="wrap">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" fill="none" stroke="#3E2723" stroke-width="1.8"><path d="M16 4c-3 4-4 7-4 10a4 4 0 008 0c0-3-1-6-4-10z"/><path d="M8 28c0-6 4-9 8-9s8 3 8 9"/></svg>
+      Ouma's Oven
+    </div>
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#bulk">Fundraisers</a></li>
+      <li><a href="#order">Order</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a class="icon-btn directions" href="https://www.google.com/maps/search/?api=1&query=22+Kerk+Street%2C+Stellenbosch" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+        Directions
+      </a>
+      <a class="icon-btn call" href="tel:+27210000000">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h4l2 5-2.5 1.5a12 12 0 006 6L15 14l5 2v4a2 2 0 01-2 2C9.7 22 2 14.3 2 6a2 2 0 012-2z"/></svg>
+        Call now
+      </a>
+    </div>
+  </div>
+</nav>
+
+<div class="sticky-actions">
+  <a class="call" href="tel:+27210000000">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h4l2 5-2.5 1.5a12 12 0 006 6L15 14l5 2v4a2 2 0 01-2 2C9.7 22 2 14.3 2 6a2 2 0 012-2z"/></svg>
+    Call
+  </a>
+  <a class="whatsapp" href="https://wa.me/27210000000" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20l1.4-4.2A8 8 0 1112 20a8 8 0 01-3.8-1z"/></svg>
+    WhatsApp
+  </a>
+  <a class="directions" href="https://www.google.com/maps/search/?api=1&query=22+Kerk+Street%2C+Stellenbosch" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+    Directions
+  </a>
+</div>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="kicker">ouma's recipes, baked fresh</div>
+      <h1>The koeksisters your granny warned you about.</h1>
+      <p>Farm-style bread, melktert, rusks, and koeksisters made the traditional way — plus custom cakes for birthdays, weddings, and everything in between.</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="#menu">See today's bake</a>
+        <a class="btn-secondary" href="#order">Order a cake</a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 30c-14 14-22 30-22 46a22 22 0 0044 0c0-16-8-32-22-46z" stroke="#D98E2B" stroke-width="2.5"/>
+        <path d="M60 150c0-22 18-38 40-38s40 16 40 38" stroke="#3E2723" stroke-width="2.5"/>
+        <path d="M60 150h80" stroke="#3E2723" stroke-width="2.5"/>
+        <path d="M76 135c3-8 12-12 24-12s21 4 24 12" stroke="#6B7C59" stroke-width="1.8"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="trust">
+  <div class="wrap">
+    <div>Baked fresh daily</div>
+    <div>Traditional family recipes</div>
+    <div>Custom celebration cakes</div>
+    <div>Fundraiser &amp; bulk orders</div>
+  </div>
+</div>
+
+<section id="menu">
+  <div class="wrap">
+    <div class="section-head center">
+      <div class="kicker">what we bake</div>
+      <h2>From the oven to your table</h2>
+    </div>
+    <div class="categories">
+      <div class="category">
+        <svg viewBox="0 0 40 40" fill="none" stroke="#D98E2B" stroke-width="2"><path d="M8 26c0-10 5-18 12-18s12 8 12 18"/><path d="M8 26h24M14 26V16M20 26V14M26 26V16"/></svg>
+        <h3>Farm Bread</h3>
+        <p>Boerbrood, seed loaves, and rolls baked fresh each morning.</p>
+      </div>
+      <div class="category">
+        <svg viewBox="0 0 40 40" fill="none" stroke="#D98E2B" stroke-width="2"><path d="M10 12c0 8 6 10 10 18 4-8 10-10 10-18 0-6-4-6-10-2-6-4-10-4-10 2z"/></svg>
+        <h3>Koeksisters &amp; Vetkoek</h3>
+        <p>Traditional plaited koeksisters and freshly fried vetkoek.</p>
+      </div>
+      <div class="category">
+        <svg viewBox="0 0 40 40" fill="none" stroke="#D98E2B" stroke-width="2"><circle cx="20" cy="20" r="13"/><path d="M10 20h20M20 10v20" stroke-dasharray="1 4"/></svg>
+        <h3>Rusks &amp; Melktert</h3>
+        <p>Buttermilk rusks and old-fashioned milk tart.</p>
+      </div>
+      <div class="category">
+        <svg viewBox="0 0 40 40" fill="none" stroke="#D98E2B" stroke-width="2"><rect x="10" y="18" width="20" height="12" rx="2"/><path d="M14 18c0-4 3-8 6-8s6 4 6 8"/><circle cx="20" cy="8" r="2" fill="#D98E2B" stroke="none"/></svg>
+        <h3>Celebration Cakes</h3>
+        <p>Birthday, wedding, and custom-order cakes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="menu" id="menu-prices">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">today's menu</div>
+      <h2>A few of our regulars</h2>
+    </div>
+    <div class="service-groups">
+      <div class="service-group">
+        <h3>Bread &amp; Savoury</h3>
+        <div class="service-row"><div class="name">Boerbrood<small>Whole loaf</small></div><div class="price">R38</div></div>
+        <div class="service-row"><div class="name">Seed loaf</div><div class="price">R42</div></div>
+        <div class="service-row"><div class="name">Vetkoek<small>Plain or with mince</small></div><div class="price">R20</div></div>
+        <div class="service-row"><div class="name">Cheese &amp; onion rolls<small>Per roll</small></div><div class="price">R15</div></div>
+        <div class="service-row"><div class="name">Rusks<small>Per bag</small></div><div class="price">R65</div></div>
+      </div>
+      <div class="service-group">
+        <h3>Sweet &amp; Cakes</h3>
+        <div class="service-row"><div class="name">Koeksisters<small>Per half dozen</small></div><div class="price">R45</div></div>
+        <div class="service-row"><div class="name">Melktert<small>Whole</small></div><div class="price">R95</div></div>
+        <div class="service-row"><div class="name">Cake slice<small>Ask what's fresh today</small></div><div class="price">R35</div></div>
+        <div class="service-row"><div class="name">Custom cake<small>Starting price, small</small></div><div class="price">from R450</div></div>
+        <div class="service-row"><div class="name">Cupcakes<small>Per dozen</small></div><div class="price">R180</div></div>
+      </div>
+    </div>
+    <p class="services-note">Prices are estimates and can vary by size and design — confirmed at order.</p>
+  </div>
+</section>
+
+<div class="info">
+  <div class="wrap">
+    <div class="info-block"><b>Hours</b><span>Tue–Sat, 6am–3pm · Closed Sun–Mon</span></div>
+    <div class="info-block"><b>Location</b><span><a href="https://www.google.com/maps/search/?api=1&query=22+Kerk+Street%2C+Stellenbosch" target="_blank" rel="noopener">22 Kerk Street, Stellenbosch</a></span></div>
+    <div class="info-block"><b>Phone</b><span><a href="tel:+27210000000">021 000 0000</a></span></div>
+  </div>
+</div>
+
+<section class="bulk" id="bulk">
+  <div class="wrap">
+    <div>
+      <div class="kicker">fundraisers &amp; bulk orders</div>
+      <h2>Baking for the school cake sale? We've got you.</h2>
+      <p>From church bazaars to school fundraisers to office catering, we do bulk orders of rusks, koeksisters, and rolls at a discount — just give us a few days' notice.</p>
+    </div>
+    <div class="bulk-card">
+      <b>Bulk order line</b>
+      <a class="num" href="tel:+27210000000">021 000 0000</a>
+      <a class="btn" href="https://wa.me/27210000000" target="_blank" rel="noopener">WhatsApp your order</a>
+    </div>
+  </div>
+</section>
+
+<section class="order" id="order">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker">order a cake</div>
+      <h2>Order ahead, especially for cakes</h2>
+      <p>Celebration and wedding cakes need at least 5 days' notice. Tell us the occasion, size, and flavour, and we'll follow up with a quote.</p>
+    </div>
+    <form onsubmit="event.preventDefault(); alert('Thanks — replace this with your real order handler.');">
+      <div class="form-row">
+        <div><label for="name">Full name</label><input id="name" type="text" required></div>
+        <div><label for="phone">Cell number</label><input id="phone" type="tel" required></div>
+      </div>
+      <div class="form-row">
+        <div><label for="occasion">Occasion</label><input id="occasion" type="text" placeholder="e.g. birthday, wedding"></div>
+        <div><label for="date">Date needed</label><input id="date" type="date"></div>
+      </div>
+      <div class="form-row">
+        <div><label for="size">Size / servings</label><input id="size" type="text" placeholder="e.g. serves 20"></div>
+        <div><label for="flavor">Flavour</label><input id="flavor" type="text" placeholder="e.g. vanilla, chocolate"></div>
+      </div>
+      <div>
+        <label for="details">Design details</label>
+        <textarea id="details" rows="3" placeholder="Colours, theme, any inspiration photos you'll send by WhatsApp"></textarea>
+      </div>
+      <button class="submit-btn" type="submit">Request a quote</button>
+      <p class="form-note">This form doesn't send email on its own — see the notes below for how to connect it in WordPress.</p>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand">Ouma's Oven Bakery</div>
+    <div>22 Kerk Street, Stellenbosch · 021 000 0000</div>
+  </div>
+</footer>
+
+</body>
+</html>

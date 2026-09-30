@@ -138,6 +138,58 @@
   footer{ background: var(--cocoa); color: rgba(250,243,230,0.7); padding: 44px 0; }
   footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; font-size:0.88rem; }
   footer .brand{ color: var(--cream); font-family: var(--serif); font-size:1.15rem; }
+
+/* =================================
+   TYRE WEBSITE - CRAFTED BY KASITU
+================================= */
+
+.crafted-by {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #a0a0a0;
+    letter-spacing: 0.5px;
+    text-align: center;
+    line-height: 1.8;
+}
+
+.crafted-by a {
+    display: inline-block;
+    color: #ff6b00;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-decoration: none;
+    margin-left: 4px;
+    transition: all 0.3s ease;
+}
+
+.crafted-by a:hover {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 107, 0, 0.6);
+}
+
+/* Subtle orange accent */
+.crafted-by::before {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 2px;
+    background: #ff6b00;
+    margin: 0 auto 12px;
+    border-radius: 2px;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+    .crafted-by {
+        font-size: 12px;
+        margin-top: 10px;
+    }
+
+    .crafted-by a {
+        letter-spacing: 0.7px;
+    }
+}
+  
 </style>
 </head>
 <body>
@@ -326,7 +378,6 @@
         <textarea id="details" rows="3" placeholder="Colours, theme, any inspiration photos you'll send by WhatsApp"></textarea>
       </div>
       <button class="submit-btn" type="submit">Request a quote</button>
-      <p class="form-note">This form doesn't send email on its own — see the notes below for how to connect it in WordPress.</p>
     </form>
   </div>
 </section>
@@ -338,5 +389,11 @@
   </div>
 </footer>
 
+    <p class="crafted-by"> 
+ Designed with Purpose by
+  <a href="https://kasituwebs.co.za/" target="_blank" rel="noopener noreferrer">
+  KASITU Webs </a>
+</p>
+  
 </body>
 </html>
